@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Cocktail Game</title>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="revealCocktail"><h1>Random Cocktail</h1></button>
+        <div id="cocktailCard">
+            <h2 id="cocktailName">Cocktail Name</h2>
+            <img id="cocktailImage" src="https://via.placeholder.com/200" alt="Cocktail" />
+            <div id="cocktailIngredients">Ingredients:</div>
+            <ul id="ingredientList"></ul> <!-- Create an empty unordered list for ingredients -->
+            <p id="cocktailInstructions">Instructions Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to fetch a random cocktail from the API
+            function getRandomCocktail() {
+                $.ajax({
+                    url: 'https://www.thecocktaildb.com/api/json/v1/1/random.php',
+                    method: 'GET',
+                    success: function (data) {
+                        // Display the cocktail data
+                        displayCocktail(data.drinks[0]);
+                    },
+                    error: function () {
+                        console.error('Error fetching random cocktail.');
+                    }
+                });
+            }
+
+            // Function to display the cocktail data
+            function displayCocktail(cocktail) {
+                // Update the cocktail card with data
+                $('#cocktailName').text(cocktail.strDrink);
+                $('#cocktailIngredients').html('Ingredients:');
+                $('#cocktailInstructions').text(cocktail.strInstructions);
+                $('#cocktailImage').attr('src', cocktail.strDrinkThumb);
+
+                // Create a list of ingredients
+                const ingredientList = $('#ingredientList');
+                ingredientList.empty(); // Clear the previous list
+
+                for (let i = 1; i <= 15; i++) {
+                    const ingredient = cocktail['strIngredient' + i];
+                    const measure = cocktail['strMeasure' + i];
+
+                    if (ingredient) {
+                        // If ingredient exists, add it to the list
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${ingredient} ${measure ? `- ${measure}` : ''}`;
+                        ingredientList.append(listItem);
+                    } else {
+                        // If no more ingredients, break the loop
+                        break;
+                    }
+                }
+
+                // Show the cocktail card
+                $('#cocktailCard').show();
+            }
+
+            // Handle reveal cocktail button click
+            $('#revealCocktail').click(function () {
+                // Hide the cocktail card
+                $('#cocktailCard').hide();
+
+                // Fetch a random cocktail from the API
+                getRandomCocktail();
+            });
+        });
+    </script>
+</body>
+</html>

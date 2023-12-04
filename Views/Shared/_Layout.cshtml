@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CocktailCompass</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        .custom-navbar {
+            background-color: #E6F7FF;
+        }
+
+        .navbar-logo {
+            max-height: 50px;
+            margin-right: 10px;
+        }
+
+        .navbar-brand{
+            color: black;
+            font: bold 32px Times New Roman, Arial;
+            margin-right: 100px;
+        }
+
+        .navbar-brand:hover{
+            color: #FF4136;
+        }
+
+        .nav-link {
+            color: #333333;
+            font: 18px Times new Roman, Arial;
+        }
+
+        .nav-link:hover{
+            color:  #FFDC00;
+            font-size:20px;
+        }
+
+        /* Add this to your existing CSS */
+
+        footer.custom-navbar {
+            background-color: #E6F7FF;
+            padding: 5px 0;
+            color: black;
+            font: bold 16px Times New Roman, Arial;
+        }
+
+            footer.custom-navbar p {
+                margin: 0;
+            }
+
+            footer.custom-navbar:hover {
+                color: #FF4136;
+            }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark custom-navbar">
+        <div class="container">
+            <img src="~/Images/logo.jpg" alt="Old bar compass" class="navbar-logo" />
+
+            @Html.ActionLink("CocktailCompass", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Cocktails", "Index", "Cocktails", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("My Favorites", "MyFavorites", "CocktailFavorites", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Random Cocktail", "RandomCocktail", "Cocktails", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer class="custom-navbar">
+            <div class="container">
+                <div class="text-center">
+                    <p>&copy; 2023 Jane Panov.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
